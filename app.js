@@ -10,33 +10,35 @@ app.get("/users/insert", async (req, res) => {
   await userModel.insertMany([
     {
       username: "hsn",
-      grades: [
-        {
-          subject: "Math",
-          result: 212,
-          year: 2012,
-        },
-        {
-          subject: "Math",
-          result: 212,
-          year: 2013,
-        },
-        {
-          subject: "Math",
-          result: 212,
-          year: 2014,
-        },
-        {
-          subject: "Math",
-          result: 212,
-          year: 2015,
-        },
-        {
-          subject: "Math",
-          result: 212,
-          year: 2016,
-        },
-      ],
+      result: {
+        grades: [
+          {
+            subject: "Math",
+            result: 212,
+            year: 2012,
+          },
+          {
+            subject: "Math",
+            result: 212,
+            year: 2013,
+          },
+          {
+            subject: "Math",
+            result: 212,
+            year: 2014,
+          },
+          {
+            subject: "Math",
+            result: 212,
+            year: 2015,
+          },
+          {
+            subject: "Math",
+            result: 212,
+            year: 2016,
+          },
+        ],
+      },
     },
   ]);
 
@@ -46,15 +48,15 @@ app.get("/users/insert", async (req, res) => {
 app.get("/users/fliter/array", async (req, res) => {
   const result = await userModel.findOne(
     {
-      _id: new mongoose.Types.ObjectId("64b8d288a26f403ff46fcedb"),
+      username: 'hsn',
     },
     {
       //   username: 1,
-      grades: {
+      'result.grades': {
         $slice: [
           {
             $filter: {
-              input: "$grades",
+              input: "$result.grades",
               as: "grade",
               cond: {
                 $and: [
