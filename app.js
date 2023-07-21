@@ -48,11 +48,11 @@ app.get("/users/insert", async (req, res) => {
 app.get("/users/fliter/array", async (req, res) => {
   const result = await userModel.findOne(
     {
-      username: 'hsn',
+      username: "hsn",
     },
     {
       //   username: 1,
-      'result.grades': {
+      "result.grades": {
         $slice: [
           {
             $filter: {
@@ -60,8 +60,15 @@ app.get("/users/fliter/array", async (req, res) => {
               as: "grade",
               cond: {
                 $and: [
-                  { $eq: ["$$grade.subject", "Math"] },
+                  // { $eq: ["$$grade.subject", "Math"] },
                   { $gte: ["$$grade.year", 2014] },
+                  {
+                    $regexMatch: {
+                      input: "$$grade.subject",
+                      regex: "math",
+                      options: "i",
+                    },
+                  },
                 ],
               },
             },
